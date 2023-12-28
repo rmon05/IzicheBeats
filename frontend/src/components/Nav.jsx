@@ -1,7 +1,8 @@
 import React from 'react';
-import logo from "../assets/zeng6.png";
+
 
 const Nav = () => {
+
     return (
         <nav className="bg-white">
             <div className="mx-2">
@@ -12,21 +13,15 @@ const Nav = () => {
                             {/* Logo */}
                             <div className="flex-shrink-0 w-12">
                                 <a href="/" className="flex items-center h-full">
-                                    <img src={logo} className="h-full w-auto" alt="Logo" />
+                                    Logo
                                 </a>
                             </div>
                             {/* Links */}
-                            <a href="/about" className="text-black hover:underline px-3 py-2">
-                                About Us
+                            <a href="/home" className="text-black hover:underline px-3 py-2">
+                                Home
                             </a>
-                            <a href="/team" className="text-black hover:underline px-3 py-2">
-                                Our Team
-                            </a>
-                            <a href="/services" className="text-black hover:underline px-3 py-2">
-                                Services
-                            </a>
-                            <a href="/sponsors" className="text-black hover:underline px-3 py-2">
-                                Sponsorships
+                            <a href="/beats" className="text-black hover:underline px-3 py-2">
+                                Beats
                             </a>
                             <a href="/contact" className="text-black hover:underline px-3 py-2">
                                 Contact
@@ -36,8 +31,8 @@ const Nav = () => {
 
                     {/* Request Quote Button */}
                     <div>
-                        <button className="bg-transparent text-black px-4 py-2 rounded-sm border border-black mr-4 hover:bg-black hover:text-white">
-                            Get a Quote
+                        <button className="bg-transparent text-black px-4 py-2 rounded border border-black mr-4 hover:bg-black hover:text-white">
+                            Cart
                         </button>                        
                     </div>
                     
