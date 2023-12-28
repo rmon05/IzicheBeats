@@ -11,6 +11,7 @@ const Home = () => {
                     <p className="text-xl text-gray-700 mb-8">
                         Quality Sound. Quality Beats. 
                     </p>
+                    {/* Explore button */}
                     <div>
                         <button className="bg-black text-white py-2 px-6 rounded-full hover:bg-blue-700 w-1/4">Explore Beats</button>
                     </div>

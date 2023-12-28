@@ -4,10 +4,12 @@ const Beats = () => {
   return (
     <>
         <div className="mx-4">
+            {/* Header Description */}
             <h2 className="text-center">
                 All Beats
             </h2>
             <p className="text-center">Our full selection of quality beats!</p>
+            {/* Display List of Beats */}
             <section className="basis-1/2 py-16">
                 <ul className="col-span-3 grid grid-cols-3 gap-x-8 gap-y-8">
                     <li>
@@ -24,7 +26,7 @@ const Beats = () => {
                             </h4>
                             {/* Beat Price */}
                             <p className="relative mt-1.5 text-xs font-medium text-gold group-hover:text-indigo-600">$10.99</p>
-                            {/* Button */}
+                            {/* Add to Cart Button*/}
                             <button className="ml-2 text-red-500 hover:underline hover:cursor-pointer">Add to Cart</button>
                         </div>
                     </li>  
