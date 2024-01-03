@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleStripeWebhook = void 0;
 const _1 = require("./");
 const sendEmail_1 = require("./sendEmail");
+const base64Converter_1 = require("./base64Converter");
 exports.handleStripeWebhook = async (req, res) => {
     // grab signature stripe attached to the request
     const sig = req.headers['stripe-signature'];
@@ -22,8 +23,14 @@ exports.handleStripeWebhook = async (req, res) => {
             const priceIds = purchasedItems.map(item => item.price.id);
             // Access database to retrieve the proper files based on priceid
             // WIP
-            // email the products with AWS SES
-            sendEmail_1.sendEmail(orderEmail, "test");
+            // file Paths ??
+            const filePaths = ["C:/Users/rayha/Music/Cold Blooded - Iziche Beats.mp3", "C:/Users/rayha/Music/Changes - Iziche Beats.mp3"];
+            // email the products with AWS SES one by one since 10MB limit
+            // WIP
+            const sender = "trikenotbike@gmail.com";
+            const subject = "Your Beat";
+            const text = "Thank you for your order from Iziche Beats!";
+            filePaths.forEach(item => sendEmail_1.sendRawEmail(sender, orderEmail, item, text, base64Converter_1.fileToBase64(item)));
         }
         res.send({ received: true });
     }
