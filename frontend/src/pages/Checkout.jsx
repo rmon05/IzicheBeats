@@ -13,7 +13,6 @@ const Checkout = () => {
         images: [
         'https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
         ],
-        audio: TBD,
         price: "price_1OUHRTAVvQlWf9Ivl7WaJWwL", // this is cold blooded
         quantity: 0,
     });
@@ -25,7 +24,6 @@ const Checkout = () => {
         images: [
         'https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
         ],
-        audio: TBD,
         price: "price_1OUM7oAVvQlWf9IvxOzajxBg", // this is changes
         quantity: 0,
     });
@@ -57,7 +55,7 @@ const Checkout = () => {
                     <img src={product1.images[0]} width="250px" alt="product1" />
 
                     <audio controls>
-                        <source src="path/to/your/audiofile.mp3" type="audio/mpeg"/>
+                        <source src="" type="audio/mpeg"/>
                         Your browser does not support the audio element.
                     </audio>
 
@@ -85,7 +83,7 @@ const Checkout = () => {
                     <img src={product2.images[0]} width="250px" alt="product1" />
 
                     <audio controls>
-                        <source src="path/to/your/audiofile.mp3" type="audio/mpeg"/>
+                        <source src={product2.audio} type="audio/mpeg"/>
                         Your browser does not support the audio element.
                     </audio>
 

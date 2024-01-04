@@ -2,7 +2,7 @@ import { stripe } from './';
 import Stripe from 'stripe';
 import {sendRawEmail} from './sendEmail';
 import { fileToBase64 } from './base64Converter';
-
+import {getAllFromPrices} from './database';
 
 
 export const handleStripeWebhook = async(req, res) => {
@@ -26,21 +26,15 @@ export const handleStripeWebhook = async(req, res) => {
 
             // Extract price IDs from purchased items
             const priceIds = purchasedItems.map(item => item.price.id);
-
-
-
+            
             // Access database to retrieve the proper files based on priceid
-            // WIP
-
-            // file Paths ??
-            const filePaths = ["C:/Users/rayha/Music/Cold Blooded - Iziche Beats.mp3", "C:/Users/rayha/Music/Changes - Iziche Beats.mp3"]
+            const filePaths = await getAllFromPrices(priceIds);
             
             // email the products with AWS SES one by one since 10MB limit
-            // WIP
             const sender = "trikenotbike@gmail.com";
             const subject = "Your Beat";
             const text = "Thank you for your order from Iziche Beats!";
-            filePaths.forEach(item => sendRawEmail(sender, orderEmail, item, text, fileToBase64(item)));
+            filePaths.forEach(item => sendRawEmail(sender, orderEmail, subject, text, item.title, fileToBase64(item.file_path)));
             
 
           }

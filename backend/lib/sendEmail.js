@@ -7,7 +7,9 @@ exports.sendRawEmail = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const dotenv_1 = require("dotenv");
 // load configs from dotenv
-dotenv_1.config();
+if (process.env.NODE_ENV !== 'production') {
+    dotenv_1.config();
+}
 const SES_CONFIG = {
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -16,7 +18,7 @@ const SES_CONFIG = {
 // create a new instance of SES
 const AWS_SES = new aws_sdk_1.default.SES(SES_CONFIG);
 // function to create raw message
-const createRawMessage = (sender, recipient, subject, text, base64File) => {
+const createRawMessage = (sender, recipient, subject, text, title, base64File) => {
     const boundary = "____Next____";
     const rawMessage = [
         `From: ${sender}`,
@@ -34,7 +36,7 @@ const createRawMessage = (sender, recipient, subject, text, base64File) => {
         `--${boundary}`,
         `Content-Type: audio/mpeg`,
         `Content-Transfer-Encoding: base64`,
-        `Content-Disposition: attachment; filename="audio.mp3"`,
+        `Content-Disposition: attachment; filename="${title}.mp3"`,
         `\n`,
         base64File,
         `\n`,
@@ -43,11 +45,11 @@ const createRawMessage = (sender, recipient, subject, text, base64File) => {
     return rawMessage.join('\n');
 };
 // function to send the email with the raw message
-exports.sendRawEmail = async (sender, recipient, subject, text, base64File) => {
+exports.sendRawEmail = async (sender, recipient, subject, text, title, base64File) => {
     try {
         const params = {
             RawMessage: {
-                Data: createRawMessage(sender, recipient, subject, text, base64File),
+                Data: createRawMessage(sender, recipient, subject, text, title, base64File),
             },
         };
         const res = await AWS_SES.sendRawEmail(params).promise();

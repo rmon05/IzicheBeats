@@ -14,7 +14,6 @@ app.use(express.json({
 }));
 
 
-
 // helper for async
 const runAsync = (callback: Function) => {
     return (req: Request, res: Response, next: NextFunction) => {
