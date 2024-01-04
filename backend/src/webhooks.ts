@@ -1,8 +1,9 @@
 import { stripe } from './';
 import Stripe from 'stripe';
-import {sendRawEmail} from './sendEmail';
+import { sendRawEmail } from './sendEmail';
 import { fileToBase64 } from './base64Converter';
-import {getAllFromPrices} from './database';
+import { getAllFromPrices } from './database';
+import { getAudio } from './s3';
 
 
 export const handleStripeWebhook = async(req, res) => {
@@ -34,7 +35,10 @@ export const handleStripeWebhook = async(req, res) => {
             const sender = "trikenotbike@gmail.com";
             const subject = "Your Beat";
             const text = "Thank you for your order from Iziche Beats!";
-            filePaths.forEach(item => sendRawEmail(sender, orderEmail, subject, text, item.title, fileToBase64(item.file_path)));
+            filePaths.forEach(async (item) => {
+                const base64 = await getAudio(item.title+".mp3");
+                sendRawEmail(sender, orderEmail, subject, text, item.title, base64);
+            });
             
 
           }

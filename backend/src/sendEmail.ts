@@ -6,9 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
     config();
 }
 const SES_CONFIG = {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_SES_REGION,
+    accessKeyId: process.env.AWS_SES_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SES_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
 };
 
 // create a new instance of SES

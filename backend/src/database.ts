@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 }).promise()
 
 
-// retrieve file path for one price
+// retrieve title for one price
 const getInfoFromPrice = async(priceID:string) => {
     try {
         // establish connection
@@ -21,13 +21,13 @@ const getInfoFromPrice = async(priceID:string) => {
 
         // get corresponding row
         const [rows, fields] = await connection.execute(
-            'SELECT file_path, title FROM beats WHERE price_id = ?',
+            'SELECT title FROM beats WHERE price_id = ?',
             [priceID]
         );
 
         if (rows.length > 0) {
             // File path found, returning the first result
-            return {file_path: rows[0].file_path, title: rows[0].title};
+            return rows[0].title;
         } else {
             // No matching price_id found
             return null;
@@ -41,11 +41,11 @@ const getInfoFromPrice = async(priceID:string) => {
 // do everything concurrently
 export const getAllFromPrices = async (priceIds:string[]) => {
     try {
-        // Use Promise.all with map to execute getFilePathAndTitleFromPrice for each priceId
-        const filePaths = await Promise.all(
+        // Use Promise.all with map to execute getInfoFromPrice for each priceId
+        const titles = await Promise.all(
             priceIds.map(priceId => getInfoFromPrice(priceId))
         );
-        return filePaths;
+        return titles;
     } catch (error) {
         console.error('Error fetching file paths and titles:', error.message);
         throw error;

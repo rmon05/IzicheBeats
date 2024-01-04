@@ -16,16 +16,16 @@ const pool = mysql2_1.default.createPool({
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.MYSQL_DB,
 }).promise();
-// retrieve file path for one price
+// retrieve title for one price
 const getInfoFromPrice = async (priceID) => {
     try {
         // establish connection
         const connection = await pool.getConnection();
         // get corresponding row
-        const [rows, fields] = await connection.execute('SELECT file_path, title FROM beats WHERE price_id = ?', [priceID]);
+        const [rows, fields] = await connection.execute('SELECT title FROM beats WHERE price_id = ?', [priceID]);
         if (rows.length > 0) {
             // File path found, returning the first result
-            return { file_path: rows[0].file_path, title: rows[0].title };
+            return rows[0].title;
         }
         else {
             // No matching price_id found
@@ -40,9 +40,9 @@ const getInfoFromPrice = async (priceID) => {
 // do everything concurrently
 exports.getAllFromPrices = async (priceIds) => {
     try {
-        // Use Promise.all with map to execute getFilePathAndTitleFromPrice for each priceId
-        const filePaths = await Promise.all(priceIds.map(priceId => getInfoFromPrice(priceId)));
-        return filePaths;
+        // Use Promise.all with map to execute getInfoFromPrice for each priceId
+        const titles = await Promise.all(priceIds.map(priceId => getInfoFromPrice(priceId)));
+        return titles;
     }
     catch (error) {
         console.error('Error fetching file paths and titles:', error.message);

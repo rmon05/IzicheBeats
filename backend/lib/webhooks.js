@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleStripeWebhook = void 0;
 const _1 = require("./");
 const sendEmail_1 = require("./sendEmail");
-const base64Converter_1 = require("./base64Converter");
 const database_1 = require("./database");
+const s3_1 = require("./s3");
 exports.handleStripeWebhook = async (req, res) => {
     // grab signature stripe attached to the request
     const sig = req.headers['stripe-signature'];
@@ -28,7 +28,10 @@ exports.handleStripeWebhook = async (req, res) => {
             const sender = "trikenotbike@gmail.com";
             const subject = "Your Beat";
             const text = "Thank you for your order from Iziche Beats!";
-            filePaths.forEach(item => sendEmail_1.sendRawEmail(sender, orderEmail, subject, text, item.title, base64Converter_1.fileToBase64(item.file_path)));
+            filePaths.forEach(async (item) => {
+                const base64 = await s3_1.getAudio(item.title + ".mp3");
+                sendEmail_1.sendRawEmail(sender, orderEmail, subject, text, item.title, base64);
+            });
         }
         res.send({ received: true });
     }
